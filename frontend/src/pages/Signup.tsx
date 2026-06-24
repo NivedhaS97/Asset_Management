@@ -55,9 +55,9 @@ export default function Signup() {
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="flex items-center gap-2 mb-8">
             <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-md flex items-center justify-center">
-              <span className="text-white font-bold text-sm">N</span>
+              <span className="text-white font-bold text-sm">AM</span>
             </div>
-            <span className="text-2xl font-bold text-teal-600">NURAL</span>
+            <span className="text-2xl font-bold text-teal-600">Asset Management</span>
           </div>
 
           <h1 className="text-2xl font-bold text-slate-900 mb-1">Get started with a free account</h1>
@@ -184,7 +184,7 @@ export default function Signup() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
               </svg>
               <h2 className="text-2xl font-bold text-slate-900">Create Your Account</h2>
-              <p className="text-slate-600 mt-4 text-sm max-w-xs">Join thousands of teams managing their IT assets with NURAL</p>
+              <p className="text-slate-600 mt-4 text-sm max-w-xs">Join thousands of teams managing their IT assets with Asset Management</p>
             </div>
           </div>
         </div>

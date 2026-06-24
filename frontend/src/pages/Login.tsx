@@ -22,9 +22,9 @@ export default function Login() {
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="flex items-center gap-2 mb-8">
             <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-md flex items-center justify-center">
-              <span className="text-white font-bold text-sm">N</span>
+              <span className="text-white font-bold text-sm">AM</span>
             </div>
-            <span className="text-2xl font-bold text-teal-600">NURAL</span>
+            <span className="text-2xl font-bold text-teal-600">Asset Management</span>
           </div>
 
           <h1 className="text-2xl font-bold text-slate-900 mb-2">Login</h1>
@@ -71,9 +71,9 @@ export default function Login() {
                 />
                 <span className="text-sm text-slate-600">Remember me</span>
               </label>
-              <a href="#" className="text-sm text-teal-600 hover:text-teal-700 font-medium">
+              <Link to="/forgot-password" className="text-sm text-teal-600 hover:text-teal-700 font-medium">
                 Forgot Password?
-              </a>
+              </Link>
             </div>
 
             <button
@@ -92,7 +92,7 @@ export default function Login() {
           </p>
 
           <div className="mt-8 pt-6 border-t border-slate-200 text-center text-xs text-slate-500">
-            Powered by <span className="text-teal-600 font-medium">NURAL</span>
+            Powered by <span className="text-teal-600 font-medium">Asset Management</span>
           </div>
         </div>
 
@@ -110,7 +110,7 @@ export default function Login() {
               </svg>
               <h2 className="text-2xl font-bold text-slate-900">Welcome to</h2>
               <p className="text-4xl font-bold mt-2">
-                <span className="text-teal-600">NURAL</span> <span className="text-slate-900">ASSETS</span>
+                <span className="text-teal-600">Asset</span> <span className="text-slate-900">Management</span>
               </p>
               <p className="text-slate-600 mt-4 text-sm max-w-xs">Manage your IT assets efficiently with our modern platform</p>
             </div>

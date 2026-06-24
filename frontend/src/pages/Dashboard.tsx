@@ -1,72 +1,75 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import Layout from '../components/Layout'
+
+const stats = [
+  { label: 'Assets online', value: '142', hint: '+8% this month' },
+  { label: 'Pending approvals', value: '12', hint: '3 critical' },
+  { label: 'Maintenance due', value: '9', hint: '2 urgent' },
+  { label: 'Compliance score', value: '98.4%', hint: 'Excellent' },
+]
+
+const actions = [
+  { title: 'Review asset inventory', description: 'Browse the full register and assigned devices.', path: '/assets' },
+  { title: 'Open reports', description: 'Check utilization, renewals, and SLA trends.', path: '/reports' },
+  { title: 'Update settings', description: 'Adjust governance, notifications, and security options.', path: '/settings' },
+]
+
+const activity = [
+  { title: 'New device assigned', detail: 'MacBook Pro 14 assigned to Anika' },
+  { title: 'Maintenance request', detail: 'Cisco Router flagged for review' },
+  { title: 'Renewal notice', detail: 'Adobe Creative Cloud is due next week' },
+]
 
 export default function Dashboard() {
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    // TODO: Clear auth tokens and redirect to login
-    navigate('/login')
-  }
-
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <header className="bg-gradient-to-r from-slate-900 via-blue-800 to-teal-600 text-white shadow-lg">
-        <div className="px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center">
-                <span className="text-teal-600 font-bold text-sm">N</span>
-              </div>
-              <div>
-                <h1 className="text-xl font-bold">Welcome! User</h1>
-                <p className="text-xs text-slate-200">COMPANY ADMIN</p>
-                <p className="text-xs text-slate-200">11th April 2023</p>
-              </div>
+    <Layout title="Welcome back, Admin" subtitle="Here’s a snapshot of your asset operations" active="dashboard">
+      <div className="space-y-6">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.label} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p className="text-sm text-slate-500">{stat.label}</p>
+              <p className="mt-2 text-3xl font-semibold text-slate-900">{stat.value}</p>
+              <p className="mt-1 text-sm text-teal-600">{stat.hint}</p>
             </div>
-            <div className="flex items-center gap-4">
-              <input
-                type="text"
-                placeholder="Search"
-                className="px-4 py-2 rounded-lg bg-white text-slate-900 placeholder:text-slate-400 text-sm"
-              />
-              <button className="text-white hover:text-slate-200">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                </svg>
-              </button>
-              <button className="text-white hover:text-slate-200">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </button>
-              <button
-                onClick={handleLogout}
-                className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold hover:bg-orange-600"
-              >
-                U
-              </button>
+          ))}
+        </div>
+
+        <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="mb-4 flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-semibold text-slate-900">Recent activity</h2>
+                <p className="text-sm text-slate-500">Latest updates across your operations.</p>
+              </div>
+              <Link to="/assets" className="text-sm font-medium text-teal-600 hover:text-teal-700">
+                View all
+              </Link>
+            </div>
+
+            <div className="space-y-3">
+              {activity.map((item) => (
+                <div key={item.title} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                  <p className="font-medium text-slate-800">{item.title}</p>
+                  <p className="mt-1 text-sm text-slate-600">{item.detail}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-slate-900">Quick actions</h2>
+            <div className="mt-4 space-y-3">
+              {actions.map((action) => (
+                <Link key={action.title} to={action.path} className="block rounded-xl border border-slate-200 p-4 transition hover:border-teal-500 hover:bg-teal-50">
+                  <p className="font-medium text-slate-800">{action.title}</p>
+                  <p className="mt-1 text-sm text-slate-500">{action.description}</p>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="px-6 py-8 max-w-7xl mx-auto">
-        <div className="bg-white rounded-lg shadow p-8 text-center">
-          <h2 className="text-3xl font-bold text-slate-900 mb-4">Dashboard</h2>
-          <p className="text-slate-600 mb-8">You're logged in! More pages coming soon...</p>
-          
-          <button
-            onClick={handleLogout}
-            className="bg-slate-900 text-white px-6 py-2 rounded-lg hover:bg-slate-800 transition-colors"
-          >
-            Logout
-          </button>
-        </div>
-      </main>
-    </div>
+      </div>
+    </Layout>
   )
 }

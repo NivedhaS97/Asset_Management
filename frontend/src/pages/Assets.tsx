@@ -1,16 +1,47 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import AddAssetModal from '../components/AddAssetModal'
 import Layout from '../components/Layout'
 
-const assets = [
+type Asset = {
+  name: string
+  owner: string
+  category: string
+  status: string
+  location: string
+}
+
+const initialAssets: Asset[] = [
   { name: 'MacBook Pro 14', owner: 'Anika', category: 'Laptop', status: 'Assigned', location: 'HQ-03' },
   { name: 'Dell Monitor 27', owner: 'Ravi', category: 'Display', status: 'Available', location: 'Store A' },
   { name: 'Cisco Router', owner: 'Mina', category: 'Network', status: 'Maintenance', location: 'DC-02' },
   { name: 'iPhone 15', owner: 'Suresh', category: 'Mobile', status: 'Assigned', location: 'HQ-01' },
 ]
 
+const categoryOptions = ['Laptop', 'Display', 'Network', 'Mobile']
+const statusOptions = ['Assigned', 'Available', 'Maintenance']
+
+const emptyForm = {
+  name: '',
+  owner: '',
+  category: categoryOptions[0],
+  status: statusOptions[0],
+  location: '',
+}
+
 export default function Assets() {
+  const [assets, setAssets] = useState<Asset[]>(initialAssets)
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [formData, setFormData] = useState(emptyForm)
+
+  useEffect(() => {
+    document.body.style.overflow = isFormOpen ? 'hidden' : ''
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isFormOpen])
 
   const filteredAssets = useMemo(() => {
     if (selectedCategory === 'All') {
@@ -18,15 +49,36 @@ export default function Assets() {
     }
 
     return assets.filter((asset) => asset.category === selectedCategory)
-  }, [selectedCategory])
+  }, [assets, selectedCategory])
 
   const groupedAssets = useMemo(() => {
-    return filteredAssets.reduce<Record<string, typeof assets>>((groups, asset) => {
+    return filteredAssets.reduce<Record<string, Asset[]>>((groups, asset) => {
       const existingGroup = groups[asset.category] ?? []
       groups[asset.category] = [...existingGroup, asset]
       return groups
     }, {})
   }, [filteredAssets])
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+
+    if (!formData.name.trim() || !formData.owner.trim() || !formData.location.trim()) {
+      return
+    }
+
+    const newAsset: Asset = {
+      name: formData.name.trim(),
+      owner: formData.owner.trim(),
+      category: formData.category,
+      status: formData.status,
+      location: formData.location.trim(),
+    }
+
+    setAssets((prev) => [newAsset, ...prev])
+    setFormData(emptyForm)
+    setIsFormOpen(false)
+    setSelectedCategory('All')
+  }
 
   return (
     <Layout title="Asset inventory" subtitle="Track all company devices and resources" active="assets">
@@ -34,11 +86,11 @@ export default function Assets() {
         <div className="grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <p className="text-sm text-slate-500">Total assets</p>
-            <p className="mt-2 text-3xl font-semibold text-slate-900">248</p>
+            <p className="mt-2 text-3xl font-semibold text-slate-900">{assets.length}</p>
           </div>
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <p className="text-sm text-slate-500">Assigned</p>
-            <p className="mt-2 text-3xl font-semibold text-slate-900">186</p>
+            <p className="mt-2 text-3xl font-semibold text-slate-900">{assets.filter((asset) => asset.status === 'Assigned').length}</p>
           </div>
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <p className="text-sm text-slate-500">Due for renewal</p>
@@ -61,13 +113,17 @@ export default function Assets() {
                   className="bg-transparent text-sm font-medium text-slate-700 outline-none"
                 >
                   <option value="All">All</option>
-                  <option value="Laptop">Laptop</option>
-                  <option value="Display">Display</option>
-                  <option value="Network">Network</option>
-                  <option value="Mobile">Mobile</option>
+                  {categoryOptions.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
                 </select>
               </label>
-              <button className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800">
+              <button
+                onClick={() => setIsFormOpen(true)}
+                className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+              >
                 Add asset
               </button>
             </div>
@@ -98,7 +154,7 @@ export default function Assets() {
                     </thead>
                     <tbody>
                       {categoryAssets.map((asset) => (
-                        <tr key={asset.name} className="border-b border-slate-100 last:border-0">
+                        <tr key={`${asset.name}-${asset.location}`} className="border-b border-slate-100 last:border-0">
                           <td className="px-3 py-3 font-medium text-slate-800">{asset.name}</td>
                           <td className="px-3 py-3 text-slate-600">{asset.owner}</td>
                           <td className="px-3 py-3 text-slate-600">{asset.category}</td>
@@ -117,6 +173,16 @@ export default function Assets() {
             ))
           )}
         </div>
+
+        <AddAssetModal
+          isOpen={isFormOpen}
+          onClose={() => setIsFormOpen(false)}
+          formData={formData}
+          onChange={(field, value) => setFormData((prev) => ({ ...prev, [field]: value }))}
+          onSubmit={handleSubmit}
+          categoryOptions={categoryOptions}
+          statusOptions={statusOptions}
+        />
 
         <div className="flex items-center gap-3 text-sm text-slate-500">
           <span>Return to</span>

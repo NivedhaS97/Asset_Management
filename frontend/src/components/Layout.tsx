@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 type LayoutProps = {
   title: string
   subtitle?: string
-  active: 'dashboard' | 'assets' | 'reports' | 'settings'
+  active: 'dashboard' | 'assets' | 'reports' | 'settings' | 'profile'
   children: React.ReactNode
 }
 
@@ -12,14 +12,15 @@ const navItems = [
   { id: 'dashboard', label: 'Overview', path: '/dashboard' },
   { id: 'assets', label: 'Assets', path: '/assets' },
   { id: 'reports', label: 'Reports', path: '/reports' },
+  { id: 'profile', label: 'Profile', path: '/profile' },
   { id: 'settings', label: 'Settings', path: '/settings' },
 ] as const
 
 export default function Layout({ title, subtitle, active, children }: LayoutProps) {
   const navigate = useNavigate()
 
-  const handleLogout = () => {
-    navigate('/login')
+  const handleProfileClick = () => {
+    navigate('/profile')
   }
 
   return (
@@ -83,8 +84,8 @@ export default function Layout({ title, subtitle, active, children }: LayoutProp
                   </svg>
                 </button>
                 <button
-                  onClick={handleLogout}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 font-semibold text-white"
+                  onClick={handleProfileClick}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 font-semibold text-white hover:bg-slate-800 cursor-pointer transition-colors"
                 >
                   U
                 </button>

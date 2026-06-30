@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import Assets from './pages/Assets'
 import Reports from './pages/Reports'
 import Settings from './pages/Settings'
+import Profile from './pages/Profile'
 import ForgotPassword from './pages/ForgotPassword'
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/assets" element={<Assets />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>
